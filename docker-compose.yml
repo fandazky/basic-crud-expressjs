@@ -1,0 +1,21 @@
+version: '3'
+services:
+  app:
+    image: node:10.12.0-alpine
+    volumes: 
+      - ./:/home/app
+    working_dir: /home/app
+    depends_on: 
+      - mongo
+    environment:
+      NODE_ENV: development
+    ports:
+      - 3000:3000
+    command: npm run dev
+
+  mongo:
+    image: mongo:4.0
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data/db:/data/db
