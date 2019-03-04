@@ -1,6 +1,14 @@
 version: '3'
 services:
+  mongo:
+    container_name: mongo
+    image: mongo:4.0
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data/db:/data/db
   app:
+    container_name: app
     image: node:10.12.0-alpine
     volumes: 
       - ./:/home/app
@@ -12,10 +20,5 @@ services:
     ports:
       - 3000:3000
     command: npm run dev
-
-  mongo:
-    image: mongo:4.0
-    ports:
-      - 27017:27017
-    volumes:
-      - ./data/db:/data/db
+    links:
+      - mongo
