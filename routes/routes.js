@@ -1,7 +1,8 @@
 const express = require('express')
 
 const Document = require('../models/Document')
-const router = express.Router()
+const router = express.Router();
+const ObjectID = require('mongodb').ObjectID;
 
 router.get('/documents/all', (req, res, next) => {
   req.app.locals.db.collection('documents').find({}).toArray((err, result) => {
@@ -18,7 +19,7 @@ router.get('/documents/all', (req, res, next) => {
 
 router.get('/documents/:id', (req, res, next) => {
   req.app.locals.db.collection('documents').findOne({
-    '_id': req.params.id
+    '_id': new ObjectID(req.params.id)
   }, (err, result) => {
     if (err) {
       res.status(400).send({'error': err})
